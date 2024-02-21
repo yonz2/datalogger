@@ -53,7 +53,9 @@ Characteristic value/descriptor: 02 8a 24 66 82 01 00
 
 "88 ec 00 03 68 d1 58 00";
 
-00 03 7c 65 64 00
+ 88 EC 00 03 7c 65 64 00
+
+{60552: bytearray(b'\x00\x03|ed\x00'), 76: <bytearray, len() = 23>}
 
 it("should decode H5075 values", () => {
     const hex = "88ec000368d15800";
@@ -63,3 +65,6 @@ it("should decode H5075 values", () => {
         tempInC: 22.3441,
         tempInF: 72.21938,
     };
+
+    {60552: b'\x00\x03|ed\x00', 76: b'\x02\x15 INTELLI_ROCKS_HWPu\xf2\xff\x0c'}
+
