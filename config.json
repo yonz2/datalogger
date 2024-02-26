@@ -1,0 +1,12 @@
+{
+    "mqtt_broker": "homeassistant",
+    "mqtt_port": 1883,
+    "monitoring_dir": "/var/log/goveebttemplogger",
+    "filename_regex": "gvh-(.+)-.+-.+.txt",
+    "mqtt_username": "datalogger",
+    "mqtt_password": "datalogger2024",
+    "mqtt_topic": "homeassistant/sensor",
+    "tracked_devices": [
+        "A4C13876CC05"
+    ]
+}

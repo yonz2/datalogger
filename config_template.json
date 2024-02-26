@@ -1,0 +1,39 @@
+{
+    "temperature": {
+        "device_class": "temperature",
+        "state_topic": "homeassistant/sensor/##DeviceId##/state",
+        "unit_of_measurement": "°C",
+        "value_template": "{{ value_json.temperature}}",
+        "unique_id": "temp_##DeviceId##",
+        "device": {
+            "identifiers": ["##DeviceId##"],
+            "name": "Datalogger_##DeviceId##",
+            "manufacturer": "VirtualDevice",
+            "model": "PI4",
+            "hw_version": "virtual_01",
+            "sw_version": "2024.2.0"
+        },
+        "json_attributes_topic": "homeassistant/sensor/##DeviceId##/state",
+        "json_attributes_template": {
+            "timestamp": "{{ as_datetime(value_json.timestamp) }}",
+            "humidity": "{{value_json.humidity }}",
+            "battery": "{{value_json.battery }}" 
+        }
+    },
+    "humidity": {
+        "device_class": "humidity",
+        "state_topic": "homeassistant/sensor/##DeviceId##/state",
+        "unit_of_measurement": "%",
+        "value_template": "{{ value_json.humidity}}",
+        "unique_id": "hum_##DeviceId##",
+        "device": {
+            "identifiers": ["##DeviceId##"]
+        },
+        "json_attributes_topic": "homeassistant/sensor/##DeviceId##/state",
+        "json_attributes_template": {
+            "timestamp": "{{ as_datetime(value_json.timestamp) }}",
+            "temperature": "{{value_json.temperature }}",
+            "battery": "{{value_json.battery }}" 
+        }        
+    }
+}
