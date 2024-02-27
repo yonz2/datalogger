@@ -1,7 +1,6 @@
 # datalogger
 
-
-This is a companion script to GoveeBTTempLogger (https://github.com/wcbonner/GoveeBTTempLogger). to provide an integration to homeassistant, using MQTT, including the automatic creation of HA entities via MQTT device discovery  
+This is a companion script to [GoveeBTTempLogger](https://github.com/wcbonner/GoveeBTTempLogger). to provide an integration to homeassistant, using MQTT, including the automatic creation of HA entities via MQTT device discovery  
 
 
 
@@ -19,8 +18,10 @@ This script uses the **Eclipse paho** mqtt client library to communicate with th
 Both need to be installed using pip:
    >`pip install watchdog paho-mqtt`
 
-For more detals see.
+For more details see:  
+
    [MQTT Sensor](https://www.home-assistant.io/integrations/sensor.mqtt/)
+
    [MQTT Integration - Sensors](Mhttps://www.home-assistant.io/integrations/mqtt/#sensors)
 
 
@@ -206,5 +207,13 @@ By following these steps, your Python script will be set up as a systemd service
 
 **Unlicense**.  
 For more information, please refer to [unlicense.org](http://unlicense.org/)
+
+
+## Disclaimer
+
+**YMMV** : Your Milage My Vary!
+
+
+
 
 Version 0.8 - February 2024
