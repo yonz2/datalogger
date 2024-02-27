@@ -9,21 +9,22 @@ This is a companion script to [GoveeBTTempLogger](https://github.com/wcbonner/Go
 
 **Filemonitor** watching a directory and on changes to a (log-)file gets the last line, reformats it as json, then publishes that json as payload to an MQTT Topic
 
-When a device is encountered for the first time, a Homeassitant MQTT Sensor configuration topics are sent to homeassistant.  
+When a device is encountered for the first time, MQTT-Sensor configuration topics are sent to homeassistant.  
 
 The MQTT Sensor is configred based on a template stored in the config_template.json file
 
 All parameters are stored in the config.json file
 
 This script uses the **Eclipse paho** mqtt client library to communicate with the MQTT Broker, as well as the **watchdog** library to monitor file system changes.
-Both need to be installed using pip:
+Both need to be installed using pip:  
+
    >`pip install watchdog paho-mqtt`
 
 For more details see:  
 
    [MQTT Sensor](https://www.home-assistant.io/integrations/sensor.mqtt/)
 
-   [MQTT Integration - Sensors](Mhttps://www.home-assistant.io/integrations/mqtt/#sensors)
+   [MQTT Integration - Sensors](https://www.home-assistant.io/integrations/mqtt/#sensors)
 
 
 ## Configuration File
