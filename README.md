@@ -48,7 +48,7 @@ the script reads some parameters from `config.json` :
 
 to dynamically configure the Homeassistant devices, when GoveeTempLogger finds a new device, there is a template file `config_template.json` Where the HA configuration is defined. The default template below, defines one device identified as "##DeviceId##", where the string "##DeviceId##" will be replaced with the actual device id discoverd (See filename_regex parameter above). This device will have three attributes: Temparture, Humidity and Battery.
 
-The first attribute (here: "temperature") defines the device itself and the first value. Subsquent attributes (here "humidity" and "battery" are then added afterwards,but with out the device details)
+The first attribute (here: "temperature") defines the device itself and the first value. Subsquent attributes (here "humidity" and "battery" are then added afterwards, but without the device details)
 
 ```json
 {
