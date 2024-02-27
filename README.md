@@ -9,8 +9,9 @@ This is a companion script to [GoveeBTTempLogger](https://github.com/wcbonner/Go
 
 **Filemonitor** watching a directory and on changes to a (log-)file gets the last line, reformats it as json, then publishes that json as payload to an MQTT Topic
 
-When a device is encountered for the first time, a Homeassitant MQQT Sensor configuration topic is sent to HA. 
-The Sensor is configred based on a template stored in the config_template.json file
+When a device is encountered for the first time, a Homeassitant MQTT Sensor configuration topics are sent to homeassistant.  
+
+The MQTT Sensor is configred based on a template stored in the config_template.json file
 
 All parameters are stored in the config.json file
 
@@ -46,6 +47,8 @@ the script reads some parameters from `config.json` :
 ## Device Configuration Template
 
 to dynamically configure the Homeassistant devices, when GoveeTempLogger finds a new device, there is a template file `config_template.json` Where the HA configuration is defined. The default template below, defines one device identified as "##DeviceId##", where the string "##DeviceId##" will be replaced with the actual device id discoverd (See filename_regex parameter above). This device will have three attributes: Temparture, Humidity and Battery.
+
+The first attribute (here: "temperature") defines the device itself and the first value. Subsquent attributes (here "humidity" and "battery" are then added afterwards,but with out the device details)
 
 ```json
 {
