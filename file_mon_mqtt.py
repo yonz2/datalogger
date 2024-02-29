@@ -27,16 +27,25 @@ from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 import paho.mqtt.client as mqtt
 
+import logging
+
+LOG_LEVEL =  os.environ.get("LOG_LEVEL","DEBUG").upper()
+
+logging.basicConfig(level=LOG_LEVEL)
+
+
 #
 #
 # Load configuration from JSON file
 def load_config():
+    logging.debug("Reading config.json")
     with open('config.json', 'r') as config_file:
         return json.load(config_file)
 
 #
 # Load the configuation paramters from config.json
 config = load_config()
+logging.debug( f"Parameters from config.json: {config}")
 mqtt_broker = config['mqtt_broker']
 mqtt_port = config['mqtt_port']
 monitoring_dir = config['monitoring_dir']
@@ -55,6 +64,7 @@ pattern = config['filename_regex']
 
 # MQTT Client Setup and connect to the broker
 client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
+client.enable_logger()
 client.username_pw_set(mqtt_username, mqtt_password)
 client.connect(mqtt_broker, mqtt_port, 60)
 
@@ -65,6 +75,7 @@ def update_config(new_device):
     # After a new device is discovered, keep track of it in the config.json file
     #
     global tracked_devices
+    logging.debug(f"Adding {new_device} to tracked devices")
     tracked_devices.add(new_device)
     config['tracked_devices'] = list(tracked_devices)
     with open('config.json', 'w') as config_file:
@@ -96,7 +107,7 @@ def new_device_config(new_device):
         # Create MQTT topic
         config_topic = f"{mqtt_topic}/{new_device_id}/{key}/config"
         client.publish(config_topic, payload=None, retain=True)
-        print(f"Published: '<<None>>' to topic: {config_topic}")
+        logging.debug(f"Published: '<<None>>' to topic: {config_topic}")
         time.sleep(3) # sleep for 3 seconds to allow homeassitant to react, before sending next message
     #end for
         
@@ -124,7 +135,7 @@ def new_device_config(new_device):
         # Publish config message with retain flag to ensure configuration will survive HA restart
         payload_str = json.dumps(payload)
         client.publish(config_topic, payload=payload_str, retain=True)
-        print(f"Published: {json.dumps(payload)} to topic: {config_topic}")
+        logging.info(f"Published: {json.dumps(payload)} to topic: {config_topic}")
         time.sleep(5) # sleep for 5 seconds to allow homeassitant to react, before sending next message
     #end for
     update_config(new_device)
@@ -176,11 +187,13 @@ class FileChangeHandler(FileSystemEventHandler):
                     topic = f"{mqtt_topic}/dl_{device_id}/state"
                     client.publish(topic, payload=json_payload_str)
 
-                    print(f"Published: {json_payload_str} to topic: {topic}")
+                    logging.debug(f"Published: {json_payload_str} to topic: {topic}")
     # end def()
 # end class()
 
 # Setting up Watchdog to monitor the given directory
+                    
+logging.debug("Starting File Observer")                    
 observer = Observer()
 observer.schedule(FileChangeHandler(), path=monitoring_dir, recursive=False)
 observer.start()
@@ -193,5 +206,6 @@ except KeyboardInterrupt:
     observer.stop()
 
 # Gracefully close the mqtt client connection
+logging.debug("Gracefully stop observer and disconnect from MQTT Broker")    
 observer.join()
 client.disconnect()
